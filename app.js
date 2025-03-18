@@ -4,13 +4,14 @@ const dotenv = require('dotenv');
 const path = require('path'); 
 const urlRoutes = require('./routes/urlRoutes');  // Ensure this is correctly defined
 const cors = require('cors');
+const { PORT, MONGODB_URI } = require('./config');
 
 const app = express();
 // dotenv.config();
-const PORT =  4000;
 
 
-mongoose.connect('mongodb://localhost:27017/urlshortener')
+
+mongoose.connect(`${MONGODB_URI}`)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
