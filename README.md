@@ -1,4 +1,4 @@
-Here’s a **README.md** file for your URL Shortener app:  
+
 
 ```md
 # URL Shortener
@@ -8,14 +8,12 @@ A simple URL Shortener web application built using Node.js, Express, MongoDB, an
 ## Features
 - Shorten long URLs into short, shareable links.
 - Redirect shortened URLs to their original destination.
-- Track usage statistics (click count, created date).
 - Simple and user-friendly UI.
 
 ## Tech Stack
-- **Frontend:** EJS, CSS, Bootstrap
+- **Frontend:** EJS, CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Hosting:** (Specify if you are hosting it)
 
 ## Installation
 
