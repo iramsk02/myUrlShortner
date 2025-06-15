@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const app = express();
 dotenv.config();
+const PORT = process.env.PORT || 7000;
 
 
 
@@ -24,4 +25,4 @@ app.use('/api', urlRoutes);  // The URL routes defined in urlRoutes.js
 app.use('/', require('./routes'));  // Ensure this is defined correctly in routes/index.js
 
 
-app.listen(process.env.PORT, () => console.log(`Server running on ${process.env.PORT}`));
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
