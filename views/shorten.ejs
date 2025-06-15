@@ -41,78 +41,38 @@
     <p>&copy; 2024 InBits. All rights reserved.</p>
   </footer> -->
 
-  <script>
+<script>
+  const API_BASE = "https://myurlshortner-pogo.onrender.com"; // no need for :7000 in render
 
+  // Handle URL shortening
+  document.getElementById('shortenForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-const API_BASE = "https://myurlshortner-pogo.onrender.com"; // Update as needed
+    const originalUrl = document.getElementById('originalUrl').value.trim();
+    const shortUrl = document.getElementById('shortUrl').value.trim();
 
-    // Handle URL shortening
-    document.getElementById('shortenForm').addEventListener('submit', async function (event) {
-      event.preventDefault();
+    try {
+      const response = await axios.post(
+        `${API_BASE}/api/shorten`,
+        { originalUrl, shortUrl },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
 
-      const originalUrl = document.getElementById('originalUrl').value.trim();
-      const shortUrl = document.getElementById('shortUrl').value.trim();
-
-      try {
-        const response = await axios.post(`${API_BASE}/api/shorten`, { originalUrl, shortUrl });
-
-
-        if (response.data) {
-          document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
-            <a class="url" style="margin: 5px; color: black;" 
-            href="${API_BASE}/${response.data.shortUrl}" target="_blank">
-            inbits/${response.data.shortUrl}</a></p>`;
-        } else {
-          document.getElementById('shortenResult').innerHTML = '<p>Something went wrong. Try again.</p>';
-        }
-      } catch (error) {
-        console.error('Error shortening the URL:', error.response ? error.response : error.message);
-        document.getElementById('shortenResult').innerHTML = `<p style="color: black;">Error: ${error.response?.data || 'Server error'}</p>`;
+      if (response.data) {
+        document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
+          <a class="url" style="margin: 5px; color: black;" 
+          href="${API_BASE}/${response.data.shortUrl}" target="_blank">
+          inbits/${response.data.shortUrl}</a></p>`;
+      } else {
+        document.getElementById('shortenResult').innerHTML = '<p>Something went wrong. Try again.</p>';
       }
-    });
+    } catch (error) {
+      console.error('Error shortening the URL:', error);
+      const message = error.response?.data?.error || error.message || "Server error";
+      document.getElementById('shortenResult').innerHTML = `<p style="color: black;">Error: ${message}</p>`;
+    }
+  });
+</script>
 
-    // Handle retrieving the original URL
-    document.getElementById('resolveForm').addEventListener('submit', async function (event) {
-      event.preventDefault();
-
-      const shortUrl = document.getElementById('resolveShortUrl').value.trim();
-
-      try {
-        const response = await axios.get(`${API_BASE}/api/resolve/${shortUrl}`);
-
-        if (response.data && response.data.originalUrl) {
-          document.getElementById('resolveResult').innerHTML = `<p>Original URL: 
-            <a class="url" style="margin: 5px; color: white;" 
-            href="${response.data.originalUrl}" target="_blank">
-            ${response.data.originalUrl}</a></p>`;
-        } else {
-          document.getElementById('resolveResult').innerHTML = '<p>Short URL not found.</p>';
-        }
-      } catch (error) {
-        console.error('Error retrieving the original URL:', error.response ? error.response : error.message);
-        document.getElementById('resolveResult').innerHTML = `<p>Error: ${error.response?.data || 'Server error'}</p>`;
-      }
-    });
-    // const API_BASE = "http://localhost:7000"; 
-    // console.log("hi1")
-
-    // document.getElementById('shortenForm').addEventListener('submit', async function (event) {
-    //   event.preventDefault();
-
-    //   const originalUrl = document.getElementById('originalUrl').value.trim();
-    //   const shortUrl = document.getElementById('shortUrl').value.trim();
-
-    //   try {
-    //     const response = await axios.post(`${API_BASE}/api/shorten`, { originalUrl, shortUrl });
-    //     console.log(response)
-
-    //     document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
-    //       <a href="${API_BASE}/${response.data.shortUrl}" target="_blank">
-    //       inbits/${response.data.shortUrl}</a></p>`;
-    //   } catch (error) {
-    //     document.getElementById('shortenResult').innerHTML = `<p>Error: ${error.response?.data || 'Server error'}</p>`;
-    //   }
-    // });
-  </script>
 </body>
 </html>
