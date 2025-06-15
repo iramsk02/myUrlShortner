@@ -59,10 +59,19 @@
       );
 
       if (response.data) {
-        document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
-          <a class="url" style="margin: 5px; color: black;" 
-          href="${API_BASE}/${response.data.shortUrl}" target="_blank">
-          inbits/${response.data.shortUrl}</a></p>`;
+        // document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
+        //   <a class="url" style="margin: 5px; color: black;" 
+        //   href="${API_BASE}/${response.data.shortUrl}" target="_blank">
+        //   inbits/${response.data.shortUrl}</a></p>`;
+
+        const fullUrl = `${API_BASE}/${response.data.shortUrl}`;
+document.getElementById('shortenResult').innerHTML = `<p>Your shortened URL: 
+  <a class="url" style="margin: 5px; color: black;" 
+  href="${fullUrl}" target="_blank">
+  inbits/${response.data.shortUrl}</a>
+  <button onclick="navigator.clipboard.writeText('${fullUrl}')">Copy</button>
+</p>`;
+
       } else {
         document.getElementById('shortenResult').innerHTML = '<p>Something went wrong. Try again.</p>';
       }
