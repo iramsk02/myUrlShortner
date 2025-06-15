@@ -4,14 +4,13 @@ const dotenv = require('dotenv');
 const path = require('path'); 
 const urlRoutes = require('./routes/urlRoutes');  // Ensure this is correctly defined
 const cors = require('cors');
-const { PORT, MONGODB_URI } = require('./config');
 
 const app = express();
-// dotenv.config();
+dotenv.config();
 
 
 
-mongoose.connect(`${MONGODB_URI}`)
+mongoose.connect(`${process.env.MONGODB_URI}`)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
 
@@ -25,4 +24,4 @@ app.use('/api', urlRoutes);  // The URL routes defined in urlRoutes.js
 app.use('/', require('./routes'));  // Ensure this is defined correctly in routes/index.js
 
 
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server running on ${process.env.PORT}`));
